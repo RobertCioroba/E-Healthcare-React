@@ -1,0 +1,29 @@
+﻿.addForm {
+    display:flex;
+    justify-content: center;
+}
+
+.formTitle {
+    text-align: center;
+    font-weight: 900;
+}
+
+.listTitle {
+    text-align: center;
+    font-weight: 900;
+    padding-top: 50px;
+}
+
+.actionBtn {
+    float:right;
+}
+
+.listParent {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
+}
+
+.listProducts {
+    margin-left: 30px;
+}
