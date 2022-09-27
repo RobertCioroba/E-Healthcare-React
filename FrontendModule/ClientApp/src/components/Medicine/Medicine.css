@@ -27,3 +27,16 @@
 .listProducts {
     margin-left: 30px;
 }
+
+.productTitle {
+    text-align:center;
+    font-weight: 800;
+}
+
+.card-text {
+    font-weight:700;
+}
+
+.card-text-detail {
+    font-weight:400;
+}

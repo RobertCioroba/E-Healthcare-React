@@ -181,7 +181,7 @@ export class PostMedicineList extends Component {
                                     value={this.state.post.expireDate} onChange={this.handleExpireDateChange}/>
                                 </div>
                                 <br/>
-                            <button type="submit" className="btn btn-primary actionBtn">Save</button>
+                            <button type="submit" className="btn btn-success actionBtn">Save</button>
                         </form>
                     </div>
                 </div>

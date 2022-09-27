@@ -157,7 +157,7 @@ namespace E_Healthcare.Controllers
             //get all orderes data if the user have been selected that option
             if(sales == true)
             {
-                orders = await _context.Orders.ToListAsync();
+                orders = await _context.Orders.Include(x => x.User).ToListAsync();
 
                 if (!range.Equals(""))
                 {
