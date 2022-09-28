@@ -13,6 +13,18 @@ export class DetailedCart extends Component {
         };
     }
 
+    handleDelete(id) {
+        fetch('api/cartItem/removeCartItem/' + id, {
+            method: 'DELETE'
+        }).then(response => response)
+            .then(data => {
+                console.log(data);
+                this.populateCartData();
+            }).catch((error) => {
+                console.error('Error', error);
+            });
+    }
+
     componentDidMount() {
         this.populateCartData();
     }
@@ -33,7 +45,7 @@ export class DetailedCart extends Component {
 
     renderCartItems() {
         if (this.state.loadingCartItems)
-            return (<p><em>Loading cart items...</em></p>)
+            return (<div className="col-sm-8 loadingResult"><p ><em>Loading cart items...</em></p></div>)
         else if (this.state.cartItems.length == 0)
             return (<div className="col-sm-8 loadingResult"><p><em>Your cart is empty...</em></p></div>)
         else {
@@ -55,7 +67,7 @@ export class DetailedCart extends Component {
                                         <td className="td">{cartItem.quantity}</td>
                                         <td className="td">*</td>
                                         <td className="td">{cartItem.product.price}</td>
-                                        <td><button className="btn btn-danger">Remove</button></td>
+                                        <td><button className="btn btn-danger" onClick={ () =>this.handleDelete(cartItem.id)}>Remove</button></td>
                                     </tr>
                                     )}                                    
                             </tbody>
