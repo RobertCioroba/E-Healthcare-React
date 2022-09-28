@@ -13,7 +13,8 @@ const context =  [
     "/api/medicine/deleteMedicineById",
     "/api/medicine/generateReport",
     "/api/cartItem/getAllCartItems",
-    "/api/cartItem/removeCartItem"
+    "/api/cartItem/removeCartItem",
+    "/api/cartItem/addCartItem"
 ];
 
 module.exports = function(app) {

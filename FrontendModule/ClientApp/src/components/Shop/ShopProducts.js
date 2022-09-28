@@ -7,8 +7,22 @@ export class ShopProducts extends Component {
 
         this.state = {
             loadingProducts: true,
+            userId: 3005,
             products: []
         };
+    }
+
+    handleAddToCartCallback = (id) => {
+        let url = 'api/cartItem/addCartItem/' + id + '/' + this.state.userId + '/1';
+        fetch(url, {
+            method: 'POST'
+        }).then(response => response)
+            .then(data => {
+                console.log("Product added to the cart.");
+                this.populateMedicineData();
+            }).catch((error) => {
+                console.error('Error', error);
+            });
     }
 
     componentDidMount() {
@@ -33,7 +47,8 @@ export class ShopProducts extends Component {
                     <h3 className="listTitle">Shop</h3>
                     <div className="listParent">
                         {this.state.products.map((product) => {
-                            return <ProductItem key={product.id} product={product} />
+                            return <ProductItem key={product.id} product={product}
+                                parentAddToCartCallback={this.handleAddToCartCallback}/>
                         })}
                     </div>
                 </div>

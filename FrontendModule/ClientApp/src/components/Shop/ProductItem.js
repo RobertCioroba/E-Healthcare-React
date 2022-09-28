@@ -4,6 +4,11 @@ import './Product.css';
 const ProductItem = (props) => {
     console.log('Detail props:', props);
 
+    function handleAddToCart(e) {
+        props.parentAddToCartCallback(props.product.id);
+        e.preventDefault();
+    }
+
     return (
         <div className="card bg-light mb-3 col-sm-3 listProducts">
             <h5 className="card-header productTitle">{props.product.name}</h5>
@@ -16,7 +21,7 @@ const ProductItem = (props) => {
             </h5>
             <div className="card-footer">
                 <button className="btn btn-primary viewBtn" type="button">View</button>
-                <button className="btn btn-success addToCartBtn" type="button">Add to cart</button>
+                <button className="btn btn-success addToCartBtn" type="button" onClick={handleAddToCart}>Add to cart</button>
             </div>
         </div>
     );
