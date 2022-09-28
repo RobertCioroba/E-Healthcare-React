@@ -1,4 +1,5 @@
-﻿import React, { Component } from 'react';
+﻿import { faL } from '@fortawesome/free-solid-svg-icons';
+import React, { Component } from 'react';
 import ProductItem from './ProductItem';
 
 export class ShopProducts extends Component {
@@ -8,6 +9,7 @@ export class ShopProducts extends Component {
         this.state = {
             loadingProducts: true,
             userId: 3005,
+            searchResult: true,
             products: []
         };
     }
@@ -35,8 +37,28 @@ export class ShopProducts extends Component {
         this.setState({ products: data, loadingProducts: false });
         console.log(data);
     }
+
+    async handleSearch() {
+        var uses = document.getElementById("searchByUse").value;
+
+        if (uses === "") {
+            this.populateMedicineData();
+        }
+        else {
+            let url = 'api/medicine/searchByUse/' + uses;
+            const response = await fetch(url);
+            const data = await response.json();
+            if(data.length !== 0)
+                this.setState({ products: data, loadingProducts: false, searchResult: true });
+            else
+                this.setState({ products: [], searchResult: false });
+
+        }
+    }
  
     renderProducts() {
+        if (this.state.searchResult == false)
+            return (<div className="col-sm-8"><p><em>No product found...</em></p></div>)
         if (this.state.loadingProducts)
             return (<p><em>Loding products...</em></p>)
         else if (this.state.products.length == 0)
@@ -45,6 +67,12 @@ export class ShopProducts extends Component {
             return (
                 <div className="col-sm-16">
                     <h3 className="listTitle">Shop</h3>
+                    <div className="searchByUse listParent">
+                        <input type="search" id="searchByUse" placeholder="Search by use..." />
+                        <button onClick={() => this.handleSearch()}>Search</button>
+                    </div>
+                    <br/>
+                    <br/>
                     <div className="listParent">
                         {this.state.products.map((product) => {
                             return <ProductItem key={product.id} product={product}

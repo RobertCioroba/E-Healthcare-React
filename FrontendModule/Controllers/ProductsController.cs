@@ -41,7 +41,7 @@ namespace E_Healthcare.Controllers
         //[Authorize(Roles = "Admin,User")]
         public async Task<ActionResult<IEnumerable<Product>>> SearchByUse(string use)
         {
-            if (_context.Products == null)
+            if (_context.Products.Where(x => x.Uses.Contains(use)).ToList() == null)
             {
                 return NotFound();
             }

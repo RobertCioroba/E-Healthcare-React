@@ -11,6 +11,7 @@ const context =  [
     "/api/medicine/addMedicine",
     "/api/medicine/updateMedicine",
     "/api/medicine/deleteMedicineById",
+    "/api/medicine/searchByUse",
     "/api/medicine/generateReport",
     "/api/cartItem/getAllCartItems",
     "/api/cartItem/removeCartItem",
