@@ -1,0 +1,40 @@
+.loadingResult {
+    display:flex;
+    justify-content: center;
+}
+
+.cartComponents {
+    display: flex;
+    justify-content: center;
+}
+
+.cartTitle {
+    text-align: center;
+    font-weight: 900;
+    padding-top:30px;
+    padding-bottom:60px;
+}
+
+.rowTable {
+    padding-bottom: 60px;
+}
+
+.totalPrice {
+    font-weight: 900;
+    font-size:25px;
+    text-align:center;
+}
+
+.td {
+    height:90px;
+    font-weight:700;
+}
+
+.th {
+    font-weight:900;
+}
+
+.checkoutBtn {
+    font-weight: 900;
+    font-size: 20px;
+}

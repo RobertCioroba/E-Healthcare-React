@@ -13,7 +13,7 @@ namespace E_Healthcare.Controllers
 {
     [Route("api/cartItem")]
     [ApiController]
-    [Authorize(Roles = "Admin,User")]
+    //[Authorize(Roles = "Admin,User")]
     public class CartItemsController : ControllerBase
     {
         private readonly DataContext _context;
@@ -23,14 +23,11 @@ namespace E_Healthcare.Controllers
             _context = context;
         }
 
-        [HttpGet("getAllCartItems")]
-        public async Task<ActionResult<IEnumerable<CartItem>>> GetCartItems()
+        [HttpGet("getAllCartItems/{id}")]
+        public async Task<ActionResult<IEnumerable<CartItem>>> GetCartItems(int id)
         {
-            if (_context.CartItems == null)
-            {
-                return NotFound();
-            }
-            return await _context.CartItems.ToListAsync();
+            Cart cart = await _context.Carts.FirstOrDefaultAsync(x => x.OwnerID == id);
+            return await _context.CartItems.Include(x => x.Product).Where(x => x.CartID == cart.ID).ToListAsync();
         }
 
         [HttpGet("getCartItemById/{id}")]
@@ -50,7 +47,7 @@ namespace E_Healthcare.Controllers
             return cartItem;
         }
 
-        [HttpPut("updateQuantity{cartItemId}/{quantity}")]
+        [HttpPut("updateQuantity/{cartItemId}/{quantity}")]
         public async Task<IActionResult> UpdateQuantity(int cartItemId, int quantity)
         {
             CartItem cartItem = await _context.CartItems.FirstOrDefaultAsync(x => x.ID == cartItemId);

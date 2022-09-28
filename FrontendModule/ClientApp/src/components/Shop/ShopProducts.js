@@ -21,26 +21,6 @@ export class ShopProducts extends Component {
         this.setState({ products: data, loadingProducts: false });
         console.log(data);
     }
-
-    handleEditCallback = (postToEdit) => {
-        this.setState({ post: postToEdit })
-    }
-
-    handleDeleteCallback = (postId) => {
-        let postIndex = this.state.products.findIndex(p => p.id === postId)
-        if (postIndex !== -1) {
-            fetch('api/medicine/deleteMedicineById/' + postId, {
-                method: 'DELETE'
-            }).then(response => response)
-                .then(data => {
-                    let postsUpdated = this.state.products;
-                    postsUpdated.splice(postIndex, 1);
-                    this.setState({ posts: postsUpdated });
-                }).catch((error) => {
-                    console.error('Error', error);
-                });
-        }
-    }
  
     renderProducts() {
         if (this.state.loadingProducts)
@@ -53,9 +33,7 @@ export class ShopProducts extends Component {
                     <h3 className="listTitle">Shop</h3>
                     <div className="listParent">
                         {this.state.products.map((product) => {
-                            return <ProductItem key={product.id} product={product}
-                                parentEditCallback={this.handleEditCallback}
-                                parentDeleteCallback={this.handleDeleteCallback} />
+                            return <ProductItem key={product.id} product={product} />
                         })}
                     </div>
                 </div>
