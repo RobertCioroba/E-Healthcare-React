@@ -14,7 +14,7 @@ namespace E_Healthcare.Controllers
 {
     [Route("api/cart")]
     [ApiController]
-    [Authorize(Roles = "Admin,User")]
+    //[Authorize(Roles = "Admin,User")]
     public class CartsController : ControllerBase
     {
         private readonly DataContext _context;
@@ -51,22 +51,19 @@ namespace E_Healthcare.Controllers
             return cart;
         }
 
-        [HttpPut("checkout/{cartId}")]
-        public async Task<ActionResult> Checkout(int cartId)
+        [HttpPut("checkout/{userId}")]
+        public async Task<ActionResult> Checkout(int userId)
         {
             //getting all the data from the database
-            if (_context.Carts == null)
-            {
-                return NotFound();
-            }
+            User user = await _context.Users.FirstOrDefaultAsync(x => x.ID == userId);
 
-            Cart cart = await _context.Carts.FindAsync(cartId);
+            Cart cart = await _context.Carts.FirstOrDefaultAsync(x => x.OwnerID == userId);
 
             if (cart == null)
                 return BadRequest("Card not found.");
 
-            User user = await _context.Users.FirstOrDefaultAsync(x => x.ID == cart.OwnerID);
-            List<CartItem> cartItems = await _context.CartItems.Include(x => x.Product).Where(x => x.CartID == cartId).ToListAsync();
+
+            List<CartItem> cartItems = await _context.CartItems.Include(x => x.Product).Where(x => x.CartID == cart.ID).ToListAsync();
 
             if (cartItems.Count == 0)
             {

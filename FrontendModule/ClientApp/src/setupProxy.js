@@ -14,7 +14,8 @@ const context =  [
     "/api/medicine/generateReport",
     "/api/cartItem/getAllCartItems",
     "/api/cartItem/removeCartItem",
-    "/api/cartItem/addCartItem"
+    "/api/cartItem/addCartItem",
+    "/api/cart/checkout"
 ];
 
 module.exports = function(app) {

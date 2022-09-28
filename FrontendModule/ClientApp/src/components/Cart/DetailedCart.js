@@ -25,6 +25,18 @@ export class DetailedCart extends Component {
             });
     }
 
+    handleCheckout(id) {
+        fetch('/api/cart/checkout/' + id, {
+            method: 'PUT'
+        }).then(response => response)
+            .then(data => {
+                console.log("Order placed");
+                this.populateCartData();
+            }).catch((error) => {
+                console.error('Error', error);
+            });
+    }
+
     componentDidMount() {
         this.populateCartData();
     }
@@ -75,7 +87,7 @@ export class DetailedCart extends Component {
                         <div className="totalPrice">Total: {this.state.totalAmount} RON</div>
                         <br />
                         <div className="cartComponents">
-                            <button className="btn btn-success checkoutBtn">Checkout</button>
+                            <button className="btn btn-success checkoutBtn" onClick={() => this.handleCheckout(this.state.userId)}>Checkout</button>
                         </div>
                     </div>
 
