@@ -39,6 +39,11 @@
     font-weight: 400;
 }
 
+.productComponents {
+    display: flex;
+    justify-content: center;
+}
+
 .addToCartBtn {
     font-weight: 900;
     float:right;

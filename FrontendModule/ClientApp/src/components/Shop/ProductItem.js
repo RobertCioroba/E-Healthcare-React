@@ -19,8 +19,7 @@ const ProductItem = (props) => {
                 <p className="card-text">Uses: <small className="card-text-detail">{props.product.uses}</small></p>
                 <p className="card-text">Expire: <small className="card-text-detail">{props.product.expireDate}</small></p>
             </h5>
-            <div className="card-footer">
-                <button className="btn btn-primary viewBtn" type="button">View</button>
+            <div className="card-footer productComponents">
                 <button className="btn btn-success addToCartBtn" type="button" onClick={handleAddToCart}>Add to cart</button>
             </div>
         </div>

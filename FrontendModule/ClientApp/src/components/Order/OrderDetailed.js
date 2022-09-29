@@ -1,5 +1,4 @@
 ﻿import React, { Component } from 'react';
-import './Order.css';
 
 export class OrderDetailed extends Component {
     constructor() {

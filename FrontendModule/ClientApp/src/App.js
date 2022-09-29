@@ -8,6 +8,7 @@ import { Product } from './components/Shop/Product';
 import { Cart } from './components/Cart/Cart';
 import { Profile } from './components/Account/Profile';
 import { Order } from './components/Order/Order';
+import { Funds } from './components/Account/Funds';
 
 import './custom.css'
 
@@ -24,6 +25,7 @@ export default class App extends Component {
         <Route path='/cart' component={Cart} />
         <Route path='/profile' component={Profile} />
         <Route path='/order' component={Order} />
+        <Route path='/funds' component={Funds} />
       </Layout>
     );
   }

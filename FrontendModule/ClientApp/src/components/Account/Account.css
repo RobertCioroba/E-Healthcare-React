@@ -2,3 +2,10 @@
     display: flex;
     justify-content: center;
 }
+
+.FundsTitle {
+    text-align: center;
+    font-weight: 900;
+    padding-top: 30px;
+    padding-bottom: 60px;
+}
