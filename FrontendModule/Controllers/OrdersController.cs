@@ -14,7 +14,7 @@ namespace E_Healthcare.Controllers
 {
     [Route("api/order")]
     [ApiController]
-    [Authorize(Roles = "Admin,User")]
+    //[Authorize(Roles = "Admin,User")]
     public class OrdersController : ControllerBase
     {
         private readonly DataContext _context;
@@ -49,6 +49,17 @@ namespace E_Healthcare.Controllers
             }
 
             return order;
+        }
+
+        [HttpGet("getOrdersByUser/{id}")]
+        public async Task<ActionResult<IEnumerable<Order>>> getOrdersByUser(int id)
+        {
+            List<Order> orders = await _context.Orders.Where(x => x.UserID == id).ToListAsync();
+
+            if (orders.Count() == 0)
+                return NotFound();
+
+            return Ok(orders);
         }
 
         [HttpPut("changeOrderStatus/{orderId}/{status}")]

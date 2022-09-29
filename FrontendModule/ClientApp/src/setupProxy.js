@@ -18,7 +18,8 @@ const context =  [
     "/api/cartItem/addCartItem",
     "/api/cart/checkout",
     "/api/user/getUserById",
-    "/api/user/editUser"
+    "/api/user/editUser",
+    "/api/order/getOrdersByUser"
 ];
 
 module.exports = function(app) {
