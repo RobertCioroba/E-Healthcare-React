@@ -1,5 +1,4 @@
-﻿import { faL } from '@fortawesome/free-solid-svg-icons';
-import React, { Component } from 'react';
+﻿import React, { Component } from 'react';
 import ProductItem from './ProductItem';
 
 export class ShopProducts extends Component {

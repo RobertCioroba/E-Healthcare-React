@@ -59,7 +59,7 @@ export class DetailedCart extends Component {
         if (this.state.loadingCartItems)
             return (<div className="col-sm-8 loadingResult"><p ><em>Loading cart items...</em></p></div>)
         else if (this.state.cartItems.length == 0)
-            return (<div className="col-sm-8 loadingResult"><p><em>Your cart is empty...</em></p></div>)
+            return (<div className="col-sm-8 cartTitle"><p><em>Your cart is empty...</em></p></div>)
         else {
             return (
                 <div className="cartComponents">

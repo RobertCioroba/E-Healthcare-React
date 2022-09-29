@@ -13,7 +13,7 @@ namespace E_Healthcare.Controllers
 {
     [Route("api/user")]
     [ApiController]
-    [Authorize(Roles = "Admin,User")]
+    //[Authorize(Roles = "Admin,User")]
     public class UsersController : ControllerBase
     {
         private readonly DataContext _context;
@@ -34,7 +34,7 @@ namespace E_Healthcare.Controllers
             return await _context.Users.ToListAsync();
         }
 
-        [Authorize(Roles = "Admin,User")]
+        //[Authorize(Roles = "Admin,User")]
         [HttpGet("getUserById/{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
@@ -52,7 +52,7 @@ namespace E_Healthcare.Controllers
             return user;
         }
 
-        [Authorize(Roles = "Admin,User")]
+        //[Authorize(Roles = "Admin,User")]
         [HttpPut("editUser/{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {

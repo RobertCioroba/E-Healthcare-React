@@ -6,6 +6,7 @@ import { Medicine } from './components/Medicine/Medicine';
 import { Report } from './components/Report/Report';
 import { Product } from './components/Shop/Product';
 import { Cart } from './components/Cart/Cart';
+import { Profile } from './components/Account/Profile';
 
 import './custom.css'
 
@@ -20,6 +21,7 @@ export default class App extends Component {
         <Route path='/medicine' component={Medicine} />
         <Route path='/product' component={Product} />
         <Route path='/cart' component={Cart} />
+        <Route path='/profile' component={Profile} />
       </Layout>
     );
   }
