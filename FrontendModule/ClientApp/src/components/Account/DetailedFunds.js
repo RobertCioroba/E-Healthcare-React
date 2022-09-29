@@ -56,12 +56,12 @@ export class DetailedFunds extends Component {
                                         <div className="form-group">
                                             <label htmlFor="accountNumber">Account</label>
                                             <input type="text" className="form-control" id="accountNumber" name="accountNumber"
-                                                onChange={this.handleFirstNameChange} />
+                                                onChange={this.handleFirstNameChange} required/>
                                         </div>
                                         <div className="form-group">
                                             <label htmlFor="money">Money</label>
                                             <input type="text" className="form-control" id="money" name="money"
-                                                 onChange={this.handleFirstNameChange} />
+                                                onChange={this.handleFirstNameChange} required/>
                                         </div>
                                         <br />
                                         <button type="submit" className="btn btn-success actionBtn">Add</button>

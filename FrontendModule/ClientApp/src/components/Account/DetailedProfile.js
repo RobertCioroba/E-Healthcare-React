@@ -106,32 +106,32 @@ export class DetailedProfile extends Component {
                                 <div className="form-group">
                                     <label htmlFor="productName">First name</label>
                                     <input type="text" className="form-control" id="firstName" name="firstName"
-                                       value={this.state.profile.firstName} onChange={this.handleFirstNameChange} />
+                                            value={this.state.profile.firstName} onChange={this.handleFirstNameChange} required/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="companyName">Last name</label>
                                     <input type="text" className="form-control" id="lastName" name="lastName"
-                                            value={this.state.profile.lastName} onChange={this.handleLastNameChange} />
+                                            value={this.state.profile.lastName} onChange={this.handleLastNameChange} required/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="price">Email</label>
                                     <input type="text" className="form-control" id="email" name="email"
-                                            placeholder="Enter price" value={this.state.profile.email} onChange={this.handleEmailChange} />
+                                            placeholder="Enter price" value={this.state.profile.email} onChange={this.handleEmailChange} required/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="quantity">Phone</label>
                                     <input type="text" className="form-control" id="phone" name="phone"
-                                            placeholder="Enter quantity" value={this.state.profile.phone} onChange={this.handlePhoneChange} />
+                                            placeholder="Enter quantity" value={this.state.profile.phone} onChange={this.handlePhoneChange} required/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="uses">Address</label>
                                     <input type="text" className="form-control" id="address" name="address"
-                                            placeholder="Enter a use" value={this.state.profile.address} onChange={this.handleAddressChange} />
+                                            placeholder="Enter a use" value={this.state.profile.address} onChange={this.handleAddressChange} required/>
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="uses">Date of birth</label>
                                     <input type="date" className="form-control" id="dateOfBirth" name="dateOfBirth"
-                                            value={this.state.profile.dateOfBirth} onChange={this.handleDateOfBirthChange} />
+                                            value={this.state.profile.dateOfBirth} onChange={this.handleDateOfBirthChange} required/>
                                 </div>
                                 <br />
                                 <button type="submit" className="btn btn-success actionBtn">Save</button>

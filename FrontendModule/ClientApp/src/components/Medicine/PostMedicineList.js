@@ -153,32 +153,32 @@ export class PostMedicineList extends Component {
                             <div className="form-group">
                                 <label htmlFor="productName">Product name</label>
                                 <input type="text" className="form-control" id="name" name="name"
-                                    placeholder="Enter name" value={this.state.post.name} onChange={this.handleProductNameChange}/>
+                                    placeholder="Enter name" required value={this.state.post.name} onChange={this.handleProductNameChange}/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="companyName">Company name</label>
                                 <input type="text" className="form-control" id="companyName" name="companyName"
-                                    placeholder="Enter name" value={this.state.post.companyName} onChange={this.handleCompanyNameChange}/>
+                                        placeholder="Enter name" required value={this.state.post.companyName} onChange={this.handleCompanyNameChange}/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="price">Price</label>
                                 <input type="text" className="form-control" id="price" name="price"
-                                    placeholder="Enter price" value={this.state.post.price} onChange={this.handlePriceChange}/>
+                                        placeholder="Enter price" required value={this.state.post.price} onChange={this.handlePriceChange}/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="quantity">Quantity</label>
                                 <input type="text" className="form-control" id="quantity" name="quantity"
-                                    placeholder="Enter quantity" value={this.state.post.quantity} onChange={this.handleQuantityChange}/>
+                                        placeholder="Enter quantity" required value={this.state.post.quantity} onChange={this.handleQuantityChange}/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="uses">Uses</label>
                                 <input type="text" className="form-control" id="uses" name="uses"
-                                    placeholder="Enter a use" value={this.state.post.uses} onChange={this.handleUsesChange}/>
+                                        placeholder="Enter a use" required value={this.state.post.uses} onChange={this.handleUsesChange}/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="uses">Expire date</label>
                                 <input type="date" className="form-control" id="expireDate" name="expireDate"
-                                    value={this.state.post.expireDate} onChange={this.handleExpireDateChange}/>
+                                        value={this.state.post.expireDate} required onChange={this.handleExpireDateChange}/>
                                 </div>
                                 <br/>
                             <button type="submit" className="btn btn-success actionBtn">Save</button>

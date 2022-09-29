@@ -57,7 +57,19 @@ export class ShopProducts extends Component {
  
     renderProducts() {
         if (this.state.searchResult == false)
-            return (<div className="col-sm-8"><p><em>No product found...</em></p></div>)
+            return (
+                <div className="col-sm-16">
+                    <h3 className="listTitle">Shop</h3>
+                    <div className="searchByUse listParent">
+                        <input type="search" id="searchByUse" placeholder="Search by use..." />
+                        <button onClick={() => this.handleSearch()}>Search</button>
+                    </div>
+
+                    <p className="listTitle"><em>No product found...</em></p>
+                </div>
+
+
+            )
         if (this.state.loadingProducts)
             return (<p><em>Loding products...</em></p>)
         else if (this.state.products.length == 0)
