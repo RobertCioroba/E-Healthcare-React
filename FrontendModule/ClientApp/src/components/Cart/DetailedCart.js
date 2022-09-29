@@ -9,7 +9,13 @@ export class DetailedCart extends Component {
             loadingCartItems: true,
             cartItems: [],
             userId: 3005,
-            totalAmount: 0
+            totalAmount: 0,
+/*            cartItem: {
+                id: 0,
+                productID: 0,
+                quantity: 0,
+                cartID: 0
+            }*/
         };
     }
 
@@ -35,6 +41,29 @@ export class DetailedCart extends Component {
             }).catch((error) => {
                 console.error('Error', error);
             });
+    }
+
+    handleEdit(id) {
+        var quantity = document.getElementById(id).value;
+        var url = '/api/cartItem/updateQuantity/' + id + '/' + quantity;
+        fetch(url, {
+            method: 'PUT'
+        }).then(response => response)
+            .then(data => {
+                console.log("Cart updated");
+                this.populateCartData();
+            }).catch((error) => {
+                console.error('Error', error);
+            });
+    }
+
+    handleQuantityChange = (e) => {
+        console.log('quantity:', e.target.value);
+        var id = e.currentTarget.id;
+        document.getElementById(id).setAttribute('value', e.target.value);
+/*        const ceva = e._react
+        const cartItem = document.getElementById(id);
+        this.setState({ cartItem: { ...cartItem, quantity: e.target.value } });*/
     }
 
     componentDidMount() {
@@ -76,9 +105,14 @@ export class DetailedCart extends Component {
                                 {this.state.cartItems.map(cartItem =>
                                     <tr key={cartItem.id}>
                                         <td className="td">{cartItem.product.name}</td>
-                                        <td className="td">{cartItem.quantity}</td>
+                                        <td className="td">
+                                            <input type="text" className="form-control" id={cartItem.id} name="quantity"
+                                                placeholder={cartItem.quantity} onChange={this.handleQuantityChange}/>
+                                            
+                                        </td>
                                         <td className="td">*</td>
-                                        <td className="td">{cartItem.product.price}</td>
+                                        <td className="td">{cartItem.product.price} RON</td>
+                                        <td><button className="btn btn-success" onClick={ () =>this.handleEdit(cartItem.id)}>Update</button></td>
                                         <td><button className="btn btn-danger" onClick={ () =>this.handleDelete(cartItem.id)}>Remove</button></td>
                                     </tr>
                                     )}                                    

@@ -51,10 +51,13 @@ namespace E_Healthcare.Controllers
         public async Task<IActionResult> UpdateQuantity(int cartItemId, int quantity)
         {
             CartItem cartItem = await _context.CartItems.FirstOrDefaultAsync(x => x.ID == cartItemId);
-            if (cartItem == null)
-                return BadRequest("Cart item is null.");
+
+            Product product = await _context.Products.FirstOrDefaultAsync(x => x.ID == cartItem.ProductID);
+            if (quantity > product.Quantity)
+                return BadRequest("Insufficient stock.");
 
             cartItem.Quantity = quantity;
+            product.Quantity -= quantity;
             await _context.SaveChangesAsync();
 
             return Ok("Successfully updated");

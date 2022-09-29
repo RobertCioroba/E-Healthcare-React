@@ -21,7 +21,8 @@ const context =  [
     "/api/user/editUser",
     "/api/order/getOrdersByUser",
     "/api/account/getAccountById",
-    "/api/account/addFunds"
+    "/api/account/addFunds",
+    "/api/cartItem/updateQuantity"
 ];
 
 module.exports = function(app) {
