@@ -9,13 +9,15 @@ import { Cart } from './components/Cart/Cart';
 import { Profile } from './components/Account/Profile';
 import { Order } from './components/Order/Order';
 import { Funds } from './components/Account/Funds';
+import { Login } from './components/Account/Login';
+import { Register } from './components/Account/Register';
 
 import './custom.css'
 
 export default class App extends Component {
   static displayName = App.name;
 
-  render () {
+  render () { 
     return (
       <Layout>
         <Route exact path='/' component={Home} />
@@ -26,6 +28,8 @@ export default class App extends Component {
         <Route path='/profile' component={Profile} />
         <Route path='/order' component={Order} />
         <Route path='/funds' component={Funds} />
+        <Route path='/login' component={Login} />
+        <Route path='/register' component={Register} />
       </Layout>
     );
   }

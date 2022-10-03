@@ -48,7 +48,7 @@ export class DetailedFunds extends Component {
                     <h1 className="FundsTitle">Funds: {this.state.funds.amount} RON</h1>
                     <br/>
                     <div className="addForm">
-                        <div className="col-sm-4">
+                        <div className="col-sm-4"> 
                             <h3 className="formTitle">Adding funds</h3>
                             <div className="card bg-light row">
                                 <div className="card-body reportSettings">

@@ -1,9 +1,10 @@
-﻿/*using E_Healthcare.Data;
+﻿using E_Healthcare.Data;
 using E_Healthcare.Models;
 using E_Healthcare.Models.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -12,7 +13,7 @@ using System.Text;
 
 namespace E_Healthcare.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/authentication")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -76,16 +77,16 @@ namespace E_Healthcare.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(LoginDto request)
         {
-            if(!_context.Users.Any(x => x.Email == request.Email) && adminAccount.Email != request.Email)
+            if (!_context.Users.Any(x => x.Email == request.Email) && adminAccount.Email != request.Email)
             {
                 return BadRequest("User not found.");
             }
 
             User currentUser = new();
             //admin case
-            if(request.Email.Equals(adminAccount.Email))
+            if (request.Email.Equals(adminAccount.Email))
             {
-                if(!request.Password.Equals(adminAccount.AdminPassword))
+                if (!request.Password.Equals(adminAccount.AdminPassword))
                 {
                     return BadRequest("Wrong password.");
                 }
@@ -102,10 +103,13 @@ namespace E_Healthcare.Controllers
                 {
                     return BadRequest("Wrong password.");
                 }
-            }    
+            }
 
             string token = CreateToken(currentUser);
-            return Ok(token);
+
+            var json = JsonConvert.SerializeObject(new { jwtToken = token });
+
+            return Ok(json);
         }
 
         private string CreateToken(User user)
@@ -114,7 +118,7 @@ namespace E_Healthcare.Controllers
 
             claims.Add(new Claim(ClaimTypes.Email, user.Email));
 
-            if(user.IsAdmin == true)
+            if (user.IsAdmin == true)
             {
                 claims.Add(new Claim(ClaimTypes.Role, "Admin"));
             }
@@ -124,9 +128,9 @@ namespace E_Healthcare.Controllers
             }
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
 
-            var token = new JwtSecurityToken(claims: claims, expires: DateTime.Now.AddDays(1),signingCredentials: credentials);
+            var token = new JwtSecurityToken(claims: claims, expires: DateTime.UtcNow.AddMinutes(30), signingCredentials: credentials);
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);
 
             return jwt;
@@ -134,7 +138,7 @@ namespace E_Healthcare.Controllers
 
         private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {
-            using(var hmac = new HMACSHA512())
+            using (var hmac = new HMACSHA512())
             {
                 passwordSalt = hmac.Key;
                 passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
@@ -143,7 +147,7 @@ namespace E_Healthcare.Controllers
 
         private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
         {
-            using(var hmac = new HMACSHA512(passwordSalt))
+            using (var hmac = new HMACSHA512(passwordSalt))
             {
                 var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
                 return computedHash.SequenceEqual(passwordHash);
@@ -151,4 +155,3 @@ namespace E_Healthcare.Controllers
         }
     }
 }
-*/
