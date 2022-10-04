@@ -1,6 +1,7 @@
 ﻿using E_Healthcare.Data;
 using E_Healthcare.Models;
 using E_Healthcare.Models.Dto;
+using FrontendModule.Controllers.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -27,17 +28,19 @@ namespace E_Healthcare.Controllers
 
         private readonly IConfiguration _configuration;
         private readonly DataContext _context;
+        private readonly IAuthManager _authManager;
 
-        public AuthController(IConfiguration configuration, DataContext context)
+        public AuthController(IConfiguration configuration, DataContext context, IAuthManager authController)
         {
             _configuration = configuration;
             _context = context;
+            _authManager = authController;
         }
 
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(RegisterDto request)
         {
-            CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            _authManager.CreatePasswordHash(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
 
             //creating the user
             user.FirstName = request.FirstName;
@@ -99,59 +102,17 @@ namespace E_Healthcare.Controllers
             {
                 currentUser = _context.Users.FirstOrDefault(x => x.Email == request.Email);
 
-                if (!VerifyPasswordHash(request.Password, currentUser.PasswordHash, currentUser.PasswordSalt))
+                if (!_authManager.VerifyPasswordHash(request.Password, currentUser.PasswordHash, currentUser.PasswordSalt))
                 {
                     return BadRequest("Wrong password.");
                 }
             }
 
-            string token = CreateToken(currentUser);
+            string token = _authManager.CreateToken(currentUser);
 
             var json = JsonConvert.SerializeObject(new { jwtToken = token });
 
             return Ok(json);
-        }
-
-        private string CreateToken(User user)
-        {
-            List<Claim> claims = new();
-
-            claims.Add(new Claim(ClaimTypes.Email, user.Email));
-
-            if (user.IsAdmin == true)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, "Admin"));
-            }
-            else
-            {
-                claims.Add(new Claim(ClaimTypes.Role, "User"));
-            }
-
-            var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value));
-            SigningCredentials credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-            var token = new JwtSecurityToken(claims: claims, expires: DateTime.UtcNow.AddMinutes(30), signingCredentials: credentials);
-            var jwt = new JwtSecurityTokenHandler().WriteToken(token);
-
-            return jwt;
-        }
-
-        private void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-            }
-        }
-
-        private bool VerifyPasswordHash(string password, byte[] passwordHash, byte[] passwordSalt)
-        {
-            using (var hmac = new HMACSHA512(passwordSalt))
-            {
-                var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                return computedHash.SequenceEqual(passwordHash);
-            }
-        }
+        }   
     }
 }

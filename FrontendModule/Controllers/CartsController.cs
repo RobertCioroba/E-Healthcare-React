@@ -52,7 +52,7 @@ namespace E_Healthcare.Controllers
         }
 
         [HttpPut("checkout/{userId}")]
-        public async Task<ActionResult> Checkout(int userId)
+        public async Task<ActionResult<Order>> Checkout(int userId)
         {
             //getting all the data from the database
             User user = await _context.Users.FirstOrDefaultAsync(x => x.ID == userId);

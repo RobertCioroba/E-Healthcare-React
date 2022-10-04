@@ -18,7 +18,7 @@ namespace E_Healthcare.Controllers
             _context = context;
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpGet("getAllAccounts")]
         public async Task<ActionResult<List<Account>>> Get()
         {
@@ -27,7 +27,7 @@ namespace E_Healthcare.Controllers
 
         //[Authorize(Roles = "Admin,User")]
         [HttpGet("getAccountById/{id}")]
-        public async Task<ActionResult<List<Account>>> Get(int id)
+        public async Task<ActionResult<Account>> Get(int id)
         {
             Account account = await _context.Accounts.FirstOrDefaultAsync(x => x.AccNumber == id);
             if (account == null)
@@ -51,8 +51,8 @@ namespace E_Healthcare.Controllers
         }
 
         [Authorize(Roles = "Admin,User")]
-        [HttpPut("editAccount/{request}")]
-        public async Task<ActionResult<List<Account>>> UpdateAccount(Account request)
+        //[HttpPut("editAccount/{request}")]
+        public async Task<ActionResult<Account>> UpdateAccount(Account request)
         {
             var account = await _context.Accounts.FindAsync(request.ID);
             if (account == null)
@@ -64,7 +64,7 @@ namespace E_Healthcare.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok(await _context.Accounts.ToListAsync()); ;
+            return Ok(account); ;
         }
     }
 }

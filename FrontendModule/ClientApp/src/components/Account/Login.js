@@ -17,18 +17,31 @@ export class Login extends Component {
             password: this.state.password
         }
 
-        const response = await fetch('/api/authentication/login', {
+/*        const response = await fetch('/api/authentication/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'accept': 'text/plain'
+            },
+            body: JSON.stringify(item)
+        });*/
+
+        fetch('/api/authentication/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(item)
-        });
-
-        const result = await response;
-        console.log(result.status);
-        let jwtToken = await response.json();
-        console.log(jwtToken.jwtToken);
+        }).then(response => response)
+            .then(data => {
+                console.log(data.status);
+                let jwtToken = data.json();
+                console.log(jwtToken.jwtToken);
+                console.log(jwtToken.userName);
+                console.log(jwtToken.userId);
+            }).catch((error) => {
+                console.error('Error', error);
+            });
     }
 
     handleEmailChange = (value) => {

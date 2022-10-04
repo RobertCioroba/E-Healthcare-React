@@ -63,7 +63,7 @@ namespace E_Healthcare.Controllers
         }
 
         [HttpPut("changeOrderStatus/{orderId}/{status}")]
-        public async Task<IActionResult> PutOrder(int orderId, OrderStatus status)
+        public async Task<ActionResult<Order>> PutOrder(int orderId, OrderStatus status)
         {
             Order order = await _context.Orders.FirstOrDefaultAsync(x => x.ID == orderId);
 

@@ -24,7 +24,7 @@ namespace E_Healthcare.Controllers
         }
 
         [HttpGet("getAllCartItems/{id}")]
-        public async Task<ActionResult<IEnumerable<CartItem>>> GetCartItems(int id)
+        public async Task<ActionResult<List<CartItem>>> GetCartItems(int id)
         {
             Cart cart = await _context.Carts.FirstOrDefaultAsync(x => x.OwnerID == id);
             return await _context.CartItems.Include(x => x.Product).Where(x => x.CartID == cart.ID).ToListAsync();
@@ -44,11 +44,11 @@ namespace E_Healthcare.Controllers
                 return NotFound();
             }
 
-            return cartItem;
+            return Ok(cartItem);
         }
 
         [HttpPut("updateQuantity/{cartItemId}/{quantity}")]
-        public async Task<IActionResult> UpdateQuantity(int cartItemId, int quantity)
+        public async Task<ActionResult<CartItem>> UpdateQuantity(int cartItemId, int quantity)
         {
             CartItem cartItem = await _context.CartItems.FirstOrDefaultAsync(x => x.ID == cartItemId);
 
@@ -60,11 +60,11 @@ namespace E_Healthcare.Controllers
             product.Quantity -= quantity;
             await _context.SaveChangesAsync();
 
-            return Ok("Successfully updated");
+            return Ok(cartItem);
         }
 
         [HttpDelete("removeCartItem/{id}")]
-        public async Task<IActionResult> DeleteCartItem(int id)
+        public async Task<ActionResult<CartItem>> DeleteCartItem(int id)
         {
             if (_context.CartItems == null)
             {
@@ -87,11 +87,11 @@ namespace E_Healthcare.Controllers
             _context.CartItems.Remove(cartItem);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(cartItem);
         }
 
         [HttpPost("addCartItem/{medicineId}/{userId}/{quantity}")]
-        public async Task<ActionResult> AddItemToCart(int medicineId, int userId,int quantity)
+        public async Task<ActionResult<Product>> AddItemToCart(int medicineId, int userId,int quantity)
         {
             //getting the data from the database
             Product medicine = await _context.Products.FindAsync(medicineId);
@@ -102,7 +102,8 @@ namespace E_Healthcare.Controllers
             if (medicine.Quantity < quantity)
                 return BadRequest("The stock is too low.");
 
-            Cart cart = await _context.Carts.FirstOrDefaultAsync(x => x.OwnerID == userId);
+            Cart cart = await _context.Carts.Include(x => x.Owner).FirstOrDefaultAsync(x => x.OwnerID == userId);
+
 
             //create and add the new entry
             CartItem cartItem = new();

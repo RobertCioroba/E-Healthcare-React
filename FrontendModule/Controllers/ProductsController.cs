@@ -28,13 +28,13 @@ namespace E_Healthcare.Controllers
 
         [HttpGet("getAllMedicine")]
         //[Authorize(Roles = "Admin,User")]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<List<Product>>> GetProducts()
         {
             if (_context.Products == null)
             {
                 return NotFound();
             }
-            return await _context.Products.ToListAsync();
+            return Ok(await _context.Products.ToListAsync());
         }
 
         [HttpGet("searchByUse/{use}")]
@@ -107,12 +107,12 @@ namespace E_Healthcare.Controllers
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProduct", new { id = product.ID }, product);
+            return Ok(product);
         }
 
         [HttpDelete("deleteMedicineById/{id}")]
         //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        public async Task<ActionResult<List<Product>>> DeleteProduct(int id)
         {
             if (_context.Products == null)
             {
@@ -127,7 +127,7 @@ namespace E_Healthcare.Controllers
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok( );
         }
 
         [HttpGet("generateReport/{sales}/{stock}/{range?}")]
