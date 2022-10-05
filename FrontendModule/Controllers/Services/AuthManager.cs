@@ -20,6 +20,7 @@ namespace FrontendModule.Controllers.Services
             List<Claim> claims = new();
 
             claims.Add(new Claim(ClaimTypes.Email, user.Email));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.ID.ToString()));
 
             if (user.IsAdmin == true)
             {

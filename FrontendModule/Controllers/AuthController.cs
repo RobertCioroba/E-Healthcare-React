@@ -110,7 +110,7 @@ namespace E_Healthcare.Controllers
 
             string token = _authManager.CreateToken(currentUser);
 
-            var json = JsonConvert.SerializeObject(new { jwtToken = token });
+            var json = JsonConvert.SerializeObject(token);
 
             return Ok(json);
         }   

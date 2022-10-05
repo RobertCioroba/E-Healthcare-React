@@ -1,4 +1,6 @@
 ﻿import React, { Component } from 'react';
+import axios from 'axios';
+import jwt from "jwt-decode";
 
 export class Login extends Component {
 
@@ -6,8 +8,7 @@ export class Login extends Component {
         super(props);
         this.state = {
             email: '',
-            password: '',
-            error: 0
+            password: ''
         };
     }
 
@@ -17,33 +18,34 @@ export class Login extends Component {
             password: this.state.password
         }
 
-/*        const response = await fetch('/api/authentication/login', {
-            method: 'POST',
+        var _headers = {
             headers: {
-                'Content-Type': 'application/json',
-                'accept': 'text/plain'
-            },
-            body: JSON.stringify(item)
-        });*/
-
-        fetch('/api/authentication/login', {
-            method: 'POST',
-            headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(item)
-        }).then(response => response)
-            .then(data => {
-                console.log(data.status);
-                let jwtToken = data.json();
-                console.log(jwtToken.jwtToken);
-                console.log(jwtToken.userName);
-                console.log(jwtToken.userId);
-            }).catch((error) => {
-                console.error('Error', error);
-            });
-    }
+            }
+        };
 
+        let result = await axios.post('/api/authentication/login', JSON.stringify(item), _headers);
+        const token = result.data;
+
+        const decodedToken = jwt(token);
+        const role = decodedToken['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+        const userId = decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+
+        console.log(role);
+        console.log(userId);
+
+        localStorage.setItem("token", role);
+        localStorage.setItem("userId", userId);
+
+        if (result.status === 200) {
+            axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+            window.location.href = '/product';
+        }
+        else
+            delete axios.defaults.headers.common["Authorization"];
+    }
+        
     handleEmailChange = (value) => {
         this.setState({ email: value });
     }
@@ -60,7 +62,7 @@ export class Login extends Component {
                         <h3 className="formTitle">Login</h3>
                         <div className="card bg-light row">
                             <div className="card-body reportSettings">
-                                <form>
+                                <div>
                                     <div className="form-group">
                                         <label htmlFor="email">Email</label>
                                         <input type="text" className="form-control" id="email" name="email"
@@ -72,8 +74,8 @@ export class Login extends Component {
                                             onChange={(e) => this.handlePasswordChange(e.target.value)} required />
                                     </div>
                                     <br />
-                                    <button onClick={() => this.handleSave()} className="btn btn-success actionBtn">Add</button>
-                                </form>
+                                    <button onClick={() => this.handleSave()} className="btn btn-success actionBtn">Save</button>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -8,7 +8,7 @@ export class DetailedCart extends Component {
         this.state = {
             loadingCartItems: true,
             cartItems: [],
-            userId: 3005,
+            userId: localStorage.getItem("userId"),
             totalAmount: 0,
 /*            cartItem: {
                 id: 0,

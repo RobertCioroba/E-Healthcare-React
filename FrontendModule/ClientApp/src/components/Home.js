@@ -7,7 +7,7 @@ export class Home extends Component {
   render () {
     return (
         <div>
-            <h1 className="adminTitle">Admin panel</h1>
+            <h1 className="adminTitle">ABC Healthcare</h1>
         </div>
     );
   }

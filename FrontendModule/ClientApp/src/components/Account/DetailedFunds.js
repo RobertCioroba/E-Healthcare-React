@@ -8,7 +8,7 @@ export class DetailedFunds extends Component {
 
         this.state = {
             loadingFunds: true,
-            userId: 3005
+            userId: localStorage.getItem("userId")
         };
     }
 

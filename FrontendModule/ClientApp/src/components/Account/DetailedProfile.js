@@ -18,7 +18,7 @@ export class DetailedProfile extends Component {
                 address: '',
                 dateOfBirth: ''
             },
-            userId: 3005,
+            userId: localStorage.getItem("userId"),
         };
     }
 

@@ -7,7 +7,7 @@ export class ShopProducts extends Component {
 
         this.state = {
             loadingProducts: true,
-            userId: 3005,
+            userId: localStorage.getItem("userId"),
             searchResult: true,
             products: []
         };

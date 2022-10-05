@@ -7,7 +7,7 @@ export class OrderDetailed extends Component {
         this.state = {
             loadingOrders: true,
             orders: [],
-            userId: 3005,
+            userId: localStorage.getItem("userId"),
         };
     }
 

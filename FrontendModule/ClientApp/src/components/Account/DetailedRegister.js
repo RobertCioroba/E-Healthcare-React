@@ -18,7 +18,7 @@ export class DetailedRegister extends Component {
                 address: '',
                 dateOfBirth: ''
             },
-            userId: 3005,
+            userId: localStorage.getItem("userId"),
         };
     }
 
